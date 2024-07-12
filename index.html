@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quiz O sabe tudo!</title>
+  <link rel="stylesheet" href="style/style.css">
+  <link rel="stylesheet" href="assets/fonts/fontawesome/css/all.css">
+</head>
+<body>
+
+  <section class="layout-game">
+    <h1 class="whats-answer">Qual é a resposta?</h1>
+
+    <div class="button-question">
+      <i class="icon-question">?</i>
+    </div>
+
+    <div class="question-database">
+      <div class="question"></div>
+
+      <div class="data">
+        <div class="responses">
+          <div class="response">
+            <div data-op class="option"></div>
+            <p class="answer"></p>
+          </div>
+        </div>
+
+        <div class="score-area">
+          <h3 class="title-points">Pontos</h3>
+          <p><i class="nivel">FÁCIL</i> (100-500)</p>
+          <p><i class="nivel">MÉDIO</i> (500-1000)</p>
+          <p><i class="nivel">DIFÍCIL</i> (1000-1500)</p>
+          <p class="points">TOTAL DE PONTOS</p>
+          <p class="total-points">0</p>
+          <div class="timer">
+            00:20
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <div class="focus-modal">
+    <div class="show-modal">
+      <h3 class="confirm-show-modal">Tem certeza da sua resposta?</h3>
+      <div class="modal-btns">
+        <div class="btn-modal btn-cancel">Não</div>
+        <div class="btn-modal btn-confirm">Sim</div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="focus-modal-points">
+    <div class="show-modal-points">
+      <h3 class="confirm-show-modal">Fim da Partida</h3>
+      <h5 class="status"></h5>
+      <h5>Pontos</h5>
+      <div class="score">0</div>
+      <div class="modal-btns">
+        <div class="btn-modal btn-continue">Jogar Novamente</div>
+      </div>
+    </div>
+  </div>
+
+  <script src="script/data.js"></script>
+  <script src="script/script.js"></script>
+</body>
+</html>

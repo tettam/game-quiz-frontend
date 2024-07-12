@@ -1,0 +1,63 @@
+.insert-question {
+  margin-bottom: 20px;
+}
+
+.form-question {
+  text-align: left;
+  width: 80%;
+  max-width: 900px;
+}
+
+.insert--answer {
+  width: 100%;
+  margin-bottom: 15px;
+}
+
+.input--question {
+  width: 90%;
+  padding: 3px;
+  color: #000000;
+  max-width: 900px;
+  padding: 5px;
+  border-radius: 20px;
+  background-color: rgba(255, 255, 255, 0.7);
+  transition: 0.5s ease all;
+  border: none;
+}
+
+.level-question {
+  margin-bottom: 15px;
+}
+
+.input--answer{
+  width: 90%;
+  color: #000000;
+  max-width: 900px;
+  padding: 5px;
+  border-radius: 20px;
+  background-color: rgba(255, 255, 255, 0.7);
+  transition: 0.5s ease all;
+  border: none;
+}
+
+.btn-insert-question {
+  width: 120px;
+  background-color: rgb(72, 154, 100);
+  border: 1px solid black;
+  font-weight: 600;
+  padding: 5px;
+  text-transform: uppercase;
+}
+
+.btn-insert-question:hover {
+  cursor: pointer;
+  background-color: rgb(79, 194, 117);
+}
+.btn-insert-question:active {
+  background-color: rgb(72, 154, 100);
+}
+
+.insert-obs {
+  font-weight: bold;
+  padding: 10px;
+}

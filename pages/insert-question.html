@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Adicionar Pergunta</title>
+  <link rel="stylesheet" href="../style/style.css">
+  <link rel="stylesheet" href="../style/insert-page.css">
+</head>
+<body>
+  <header>
+    <h1 class="whats-answer">
+      Cadastrar Pergunta*
+    </h1>
+  </header>
+  
+  <form id="question-form" method="post" class="questionForm">
+    <div class="insert-question">
+      <h3>Pergunta</h3>
+      <input class="input--question" type="text" name="question" id="question">
+    </div>
+
+    <div class="level-question">
+      <h3>Nível da Pergunta</h3>
+      <label>
+        <input type="radio" name="level" id="level" value="1" checked> Fácil
+      </label>
+      <label>
+        <input type="radio" name="level" id="level" value="2"> Médio
+      </label>
+      <label>
+        <input type="radio" name="level" id="level" value="3"> Difícil
+      </label>
+    </div>
+
+    <div class="insert--answers">
+      <h3>Adicione as respostas</h3>
+      <div class="insert--answer">
+        <input class="input--answer" type="text" name="answer[]" id="answer--1">
+        <input type="checkbox" name="is_correct[]" id="is--correct1">
+      </div>
+      <div class="insert--answer">
+        <input  class="input--answer" type="text" name="answer[]" id="answer--2">
+        <input type="checkbox" name="is_correct[]" id="is--correct2">
+      </div>
+      <div class="insert--answer">
+        <input  class="input--answer" type="text" name="answer[]" id="answer--3">
+        <input type="checkbox" name="is_correct[]" id="is--correct3">
+      </div>
+      <div class="insert--answer">
+        <input  class="input--answer" type="text" name="answer[]" id="answer--4">
+        <input type="checkbox" name="is_correct[]" id="is--correct4">
+      </div>
+      <div class="insert--answer">
+        <input  class="input--answer" type="text" name="answer[]" id="answer--5">
+        <input type="checkbox" name="is_correct[]" id="is--correct5">
+      </div>
+
+      <button type="submit" class="btn-insert-question">Cadastrar</button>
+    </div>
+  </form>
+  <p class="insert-obs">*Marque a caixa de seleção para indicar a resposta correta. Apenas uma resposta correta é permitida por pergunta.</p>
+
+
+  <script src="../script/insertForm.js"></script>
+
+</body>
+</html>
