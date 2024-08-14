@@ -1,3 +1,6 @@
+import { requestGetQuestion } from "../script/request.js";
+
+
 //Inicial Data
 const level = ['facil', 'medio', 'dificil'];
 let currentQuestion = 0;
@@ -5,35 +8,40 @@ let totalPoints = 0;
 
 
 //Functions
-function showQuestion() {
-  const levelNow = data[level[currentQuestion]];
+async function showQuestion() {
+  const levelNow = await requestGetQuestion('facil');
+  const dataResult = levelNow.data.result;
 
-  if (levelNow) {
+
+  if (dataResult) {
+    const dataResultQuestion = dataResult.question.question;
+    const dataResultAnswers = dataResult.question.answers;
+
     const responsesContainer = document.querySelector('.responses');
     const questionElement = document.querySelector('.question');
 
-    const randowQuestion = getRandomQuestion(levelNow);
-    const dataOptions = levelNow[randowQuestion];
 
     responsesContainer.textContent = '';
-    questionElement.textContent = dataOptions.question;
+    questionElement.textContent = dataResultQuestion;
 
-    for (let index = 0; index < dataOptions.options.length; index++) {
-      const optionText = dataOptions.options[index];
+    for (let index = 0; index < dataResultAnswers.length; index++) {
+      const optionText = dataResultAnswers[index];
       const responseElement = document.createElement('div');
       responseElement.classList.add('response');
       responseElement.setAttribute('data-op', `${index+1}`);
       responseElement.innerHTML = 
       `
         <div class="option">${index+1}</div>
-        <p class="answer">${optionText}</p>
+        <p class="answer">${optionText.answer}</p>
       `;
       responsesContainer.appendChild(responseElement);
     }
 
     const responseElements = document.querySelectorAll('.response');
     responseElements.forEach(item => {
-      item.addEventListener('click', (e) => responseEventClick(e, dataOptions));
+      item.addEventListener('click', (e) => {
+        responseEventClick(item, dataResultAnswers);
+      });
     })
 
   } else {
@@ -41,19 +49,14 @@ function showQuestion() {
   }
 }
 
-function getRandomQuestion(levelNow) {
-  const amountData = levelNow.length - 1;
-  const questionRandom = Math.floor(Math.random() * amountData);
-  return questionRandom;
-}
+async function responseEventClick(item, listAnswers) {
 
-
-function responseEventClick(e, dataOptions) {
-  let clickedOption = e.target.parentNode.getAttribute('data-op');
-
+  let clickedOption = parseInt(item.dataset.op);
+  const verifyQuestion = listAnswers[clickedOption - 1].isCorrect;
   confirmAnswer().then((confirm => {
     if(confirm) {
-      if(parseInt(clickedOption) === dataOptions.answer) {
+      if(verifyQuestion === true) {
+        console.log(verifyQuestion)
         calculatorPoints();
         nextQuestion();
       } else {

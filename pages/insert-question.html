@@ -13,8 +13,8 @@
       Cadastrar Pergunta*
     </h1>
   </header>
-  
-  <form id="question-form" method="post" class="questionForm">
+  <p class="show--msg">msg</p>
+  <form id="question-form" method="post" class="question-form">
     <div class="insert-question">
       <h3>Pergunta</h3>
       <input class="input--question" type="text" name="question" id="question">
@@ -23,13 +23,13 @@
     <div class="level-question">
       <h3>Nível da Pergunta</h3>
       <label>
-        <input type="radio" name="level" id="level" value="1" checked> Fácil
+        <input type="radio" name="level" value="1" checked> Fácil
       </label>
       <label>
-        <input type="radio" name="level" id="level" value="2"> Médio
+        <input type="radio" name="level" value="2"> Médio
       </label>
       <label>
-        <input type="radio" name="level" id="level" value="3"> Difícil
+        <input type="radio" name="level" value="3"> Difícil
       </label>
     </div>
 
@@ -62,7 +62,9 @@
   <p class="insert-obs">*Marque a caixa de seleção para indicar a resposta correta. Apenas uma resposta correta é permitida por pergunta.</p>
 
 
-  <script src="../script/insertForm.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script type="module" src="../script/insertForm.js"></script>
+  <script type="module" src="../script/request.js"></script>
 
 </body>
 </html>

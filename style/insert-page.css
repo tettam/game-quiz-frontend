@@ -2,10 +2,10 @@
   margin-bottom: 20px;
 }
 
-.form-question {
+.question-form {
   text-align: left;
   width: 80%;
-  max-width: 900px;
+  max-width: 600px;
 }
 
 .insert--answer {
@@ -19,7 +19,7 @@
   color: #000000;
   max-width: 900px;
   padding: 5px;
-  border-radius: 20px;
+  border-radius: 10px;
   background-color: rgba(255, 255, 255, 0.7);
   transition: 0.5s ease all;
   border: none;
@@ -34,7 +34,7 @@
   color: #000000;
   max-width: 900px;
   padding: 5px;
-  border-radius: 20px;
+  border-radius: 10px;
   background-color: rgba(255, 255, 255, 0.7);
   transition: 0.5s ease all;
   border: none;
@@ -60,4 +60,24 @@
 .insert-obs {
   font-weight: bold;
   padding: 10px;
+}
+
+.show--msg {
+  display: none;
+  padding: 15px;
+  margin: 20px;
+  border-radius: 5px;
+  text-transform: uppercase;
+}
+
+.show--msg-error {
+  display: block;
+  color: red;
+  background-color: #e3dada;
+}
+
+.show--msg-sucess {
+  display: block;
+  color: rgb(19, 56, 5);
+  background-color: #a1d196;
 }
