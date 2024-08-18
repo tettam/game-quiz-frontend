@@ -185,8 +185,6 @@ body {
   text-transform: uppercase;
 }
 
-
-
 /* modal confirmation*/
 .focus-modal {
   position: absolute;
@@ -215,6 +213,10 @@ body {
   border-radius: 10px;
   padding: 2em;
   align-items: center;
+}
+
+.show-modal-quiz {
+  display: none;
 }
 
 .confirm-show-modal {

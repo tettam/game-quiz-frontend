@@ -50,16 +50,18 @@ async function showQuestion() {
 }
 
 async function responseEventClick(item, listAnswers) {
-
   let clickedOption = parseInt(item.dataset.op);
   const verifyQuestion = listAnswers[clickedOption - 1].isCorrect;
+
   confirmAnswer().then((confirm => {
     if(confirm) {
       if(verifyQuestion === true) {
-        console.log(verifyQuestion)
+        playSound('correct')
         calculatorPoints();
         nextQuestion();
       } else {
+        playSound('error');
+        timerPlaySound(false);
         modalStatusMsg('Você errou a resposta')
         finalScore();
       }
@@ -67,6 +69,41 @@ async function responseEventClick(item, listAnswers) {
       console.log('cancelado');
     }
   }))
+}
+
+const sounds = {
+  correct: new Audio('../assets/audio/correct-answer.mp3'),
+  error: new Audio('../assets/audio/error-answer.mp3'),
+  time: new Audio('../assets/audio/time-answer.mp3')
+}
+
+function playSound(response) {
+  switch (response) {
+    case 'correct':
+      sounds.correct.play();
+      break;
+    case 'error':
+      sounds.error.play();
+      break;
+    case 'time':
+      timerPlaySound(true);
+      break;
+
+    default:
+      console.error('Som não encontrado!');
+      break;
+  }
+}
+
+function timerPlaySound(active) {
+  if(active) {
+    sounds.time.loop = true;
+    sounds.time.currentTime = 3;
+    sounds.time.play();
+
+  } else {
+    sounds.time.pause();
+  }
 }
 
 function modalStatusMsg(msg) {
@@ -102,6 +139,7 @@ function finalScore() {
 
   btnContinue.addEventListener('click', () => {
     resetQuestion();
+    timerPlaySound(true);
     modalScore.style.display = 'none';
   })
 }
@@ -139,11 +177,27 @@ function calculatorPoints() {
   updatePoints();
 }
 
-function updatePoints(pointsRandom) {
+function updatePoints() {
   const points = document.querySelector('.total-points');
   points.textContent = totalPoints;
 }
 
+function questionDatabase(response) {
+  const quiz = document.querySelector('.question-database');
+  response ? quiz.classList.add('show-modal-quiz') : quiz.classList.remove('show-modal-quiz');
+}
 
+// Start Game and Active Sounds
+document.addEventListener('DOMContentLoaded', () => {
+  const msgStart = document.querySelector('.msg-start');
+  const yesMsg = document.querySelector('.msg-yes');
+  questionDatabase(true)
+  msgStart.classList.add('focus-modal-true');
 
-showQuestion();
+  yesMsg.addEventListener('click', () => {
+    msgStart.classList.remove('focus-modal-true');
+    playSound('time');
+    questionDatabase(false);
+    showQuestion();
+  })
+})
