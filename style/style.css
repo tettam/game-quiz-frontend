@@ -9,12 +9,14 @@
   --var-color-background: #d9d9e1;
 
 
+
   /* theme game-designer*/
   --var-color-game-brown: #592D4A;
   --var-color-game-pink: #D989BD;
   --var-color-game-pink-dark: #A65398;
   --var-color-game-lilac: #51358C;
   --var-color-game-white: #F2F2F2;
+  --var-color-yellow: #EABC24;
 }
 
 * {
@@ -32,29 +34,35 @@ body {
   align-items: center;
   text-align: center;
   height: 100vh;
-  background-color: var(--var-color-background);
 }
 
 .whats-answer {
-  color: var(--var-color-white);
-  border: 5px solid var(--var-color-white);
-  background-color: var(--var-color-default);
-  padding: 5px;
-  border-radius: 10px;
-  margin: auto;
-  margin-top: 10px;
-  font-size: 20x;
-  margin-bottom: 20px;
-  width: 300px;
+  display: flex;
+  color: var(--var-color-yellow);
+  width: 180px;
+  text-transform: uppercase;
+  border-bottom: 5px solid var(--var-color-yellow);
+  padding-bottom: 5px;
 }
 
 .layout-game {
-  background-color: var(--var-color-background);
   background-position: center;
   background-size: cover;
   border-radius: 10px;
   width: 100vw;
   height: 100%;
+  background-image: url('../assets/imgs/background3.jpeg');
+  background-position: center;
+}
+
+.question-database {
+  padding: 70px;
+  margin: auto;
+  background-color: rgba(0, 0, 0, 0.4);
+  max-width: 80vw;
+  height: 90vh;
+  margin-top: 30px;
+  box-shadow: 0px 0px 15px 5px white
 }
 
 .button-question {
@@ -92,19 +100,12 @@ body {
 
 .question {
   display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
   width: 80%;
   font-size: 26px;
   font-weight: 600;
   padding: 20px;
-  letter-spacing: 1px;
-  margin: auto;
-  margin-top: 20px;
-  background-color: rgba(255, 255, 255, 0.7);
-  color: #000000;
-  border-radius: 20px;
+  color: var(--var-color-background);
+  font-weight: 800;
 }
 
 .responses {
@@ -114,19 +115,20 @@ body {
 .response {
   display: flex;
   align-items: center;
-  color: #000000;
+  color: var(--var-color-game-white);
   max-width: 900px;
-  padding: 10px;
-  border-radius: 20px;
+  padding: 5px;
   margin: auto;
-  background-color: rgba(255, 255, 255, 0.7);
-  margin-top: 5px;
+  background-color: rgba(0, 0, 0, 0.7);
+  margin-top: 20px;
   transition: 0.5s ease all;
 }
 
 .response:hover {
-  background-color: var(--var-color-game-pink-dark);
   cursor: pointer;
+  transform: translateY(-10px);
+  color: var(--var-color-game-pink-dark);
+  border: none;
 }
 
 .response p {
@@ -312,13 +314,13 @@ body {
 
 .points {
   font-size: 1.5em;
-  color: var(--var-color-game-brown);
+  color: var(--var-color-background);
   font-weight: bold;
 }
 
 .total-points {
   font-size: 2.5em;
-  color: var(--var-color-game-brown);
+  color: var(--var-color-background);
   font-weight: bold;
 }
 
@@ -326,5 +328,5 @@ body {
   font-size: 5em;
   font-weight: bold;
   margin-top: 0.5em;
-  color: var(--var-color-game-brown);
+  color: var(--var-color-background);
 }

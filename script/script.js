@@ -5,11 +5,15 @@ import { requestGetQuestion } from "../script/request.js";
 const level = ['facil', 'medio', 'dificil'];
 let currentQuestion = 0;
 let totalPoints = 0;
+let timer;
+let seconds = 31;
 
 
 //Functions
 async function showQuestion() {
-  const levelNow = await requestGetQuestion('facil');
+  const updateLevel = verifyCurrentQuestion();
+  const levelNow = await requestGetQuestion(level[updateLevel]);
+  console.log(updateLevel);
   const dataResult = levelNow.data.result;
 
 
@@ -31,7 +35,6 @@ async function showQuestion() {
       responseElement.setAttribute('data-op', `${index+1}`);
       responseElement.innerHTML = 
       `
-        <div class="option">${index+1}</div>
         <p class="answer">${optionText.answer}</p>
       `;
       responsesContainer.appendChild(responseElement);
@@ -49,26 +52,38 @@ async function showQuestion() {
   }
 }
 
+function verifyCurrentQuestion() {
+  if(currentQuestion <= 3) {
+    return 0;
+  } else if(currentQuestion <= 7) {
+    return 1;
+  } else if(currentQuestion <= 9) {
+    return 2;
+  }
+}
+
 async function responseEventClick(item, listAnswers) {
   let clickedOption = parseInt(item.dataset.op);
   const verifyQuestion = listAnswers[clickedOption - 1].isCorrect;
-
-  confirmAnswer().then((confirm => {
-    if(confirm) {
-      if(verifyQuestion === true) {
-        playSound('correct')
-        calculatorPoints();
-        nextQuestion();
-      } else {
-        playSound('error');
-        timerPlaySound(false);
-        modalStatusMsg('Você errou a resposta')
-        finalScore();
-      }
+  const confirm = await confirmAnswer();
+  if(confirm) {
+    if(verifyQuestion === true) {
+      nextQuestion();
+      playSound('correct');
+      calculatorPoints();
+      timerPlaySound(false);
+      timerQuestion('stop');
+      timerQuestion('start');
     } else {
-      console.log('cancelado');
+      playSound('error');
+      timerQuestion('stop');
+      timerPlaySound(false);
+      modalStatusMsg('Você errou a resposta')
+      finalScore();
     }
-  }))
+  } else {
+    console.log('cancelado');
+  }
 }
 
 const sounds = {
@@ -97,7 +112,6 @@ function playSound(response) {
 
 function timerPlaySound(active) {
   if(active) {
-    sounds.time.loop = true;
     sounds.time.currentTime = 3;
     sounds.time.play();
 
@@ -108,7 +122,8 @@ function timerPlaySound(active) {
 
 function modalStatusMsg(msg) {
   const status = document.querySelector('.status');
-  status.textContent = `${msg} de nível ${level[currentQuestion]}`;
+  const newLevel = verifyCurrentQuestion();
+  status.textContent = `${msg} de nível ${level[newLevel]}`;
 }
 
 function confirmAnswer() {
@@ -138,17 +153,32 @@ function finalScore() {
   modalScore.style.display = 'flex';
 
   btnContinue.addEventListener('click', () => {
+    currentQuestion = 0;
+    showOptionQuestion();
     resetQuestion();
-    timerPlaySound(true);
+    startTimer();
     modalScore.style.display = 'none';
   })
 }
 
 function nextQuestion() {
-  if(currentQuestion < 3) {
-    currentQuestion ++
+  currentQuestion++;
+
+  if(currentQuestion < 10) {
+    showOptionQuestion();
+  } else {
+    playSound('correct');
+    timerPlaySound(false);
+    stopTimer();
+    modalStatusMsg('Fim de quiz');
+    finalScore();
   }
   showQuestion();
+}
+
+function showOptionQuestion() {
+  const whatsAnswer = document.querySelector('.whats-answer');
+  whatsAnswer.textContent = `Questão ${currentQuestion+1}/10`
 }
 
 function resetQuestion() {
@@ -159,18 +189,21 @@ function resetQuestion() {
 }
 
 function calculatorPoints() {
-  let pointsRandom = 0;
   //score per level
-  switch (currentQuestion) {
-    case 0:
-      pointsRandom = Math.floor(Math.random() * 5 + 1) * 100;// easy
-      break;
-    case 1:
-      pointsRandom = Math.floor(Math.random() * 6 + 5) * 100; //middle
-      break;
-    case 2:
-      pointsRandom = Math.floor(Math.random() * 6 + 10) * 100;//difficult
-    break;
+  const EASY_SCORE = 1;
+  const MEDDLE_SCORE = 5;
+  const DIFFICULT_SCORE = 10;
+
+  let pointsRandom = 0;
+
+  if(currentQuestion <= 3) {
+    pointsRandom = Math.floor(Math.random() * 5 + EASY_SCORE) * 100;
+
+  } else if(currentQuestion <= 7) {
+    pointsRandom = Math.floor(Math.random() * 6 + MEDDLE_SCORE) * 100; 
+    
+  } else if(currentQuestion <= 9) {
+    pointsRandom = Math.floor(Math.random() * 6 + DIFFICULT_SCORE) * 100;
   }
 
   totalPoints += pointsRandom;
@@ -196,8 +229,47 @@ document.addEventListener('DOMContentLoaded', () => {
 
   yesMsg.addEventListener('click', () => {
     msgStart.classList.remove('focus-modal-true');
-    playSound('time');
     questionDatabase(false);
     showQuestion();
+    timerQuestion('start')
   })
 })
+
+//Timer
+function timerQuestion(action) {
+  if(action == 'start') {
+    startTimer();
+  } else {
+    stopTimer();
+  }
+}
+
+function startTimer() {
+  const showTimer = document.querySelector('.timer');
+
+  stopTimer();
+  timer = setInterval(() => {
+    seconds--;
+    showTimer.textContent = formatTimer(seconds);
+    if(seconds == 10) {
+      timerPlaySound(true);
+    }
+
+    if(seconds <= 0) {
+      playSound('error');
+      timerPlaySound(false);
+      modalStatusMsg('Tempo esgotado na questão')
+      finalScore();
+      stopTimer();
+    }
+  }, 1000);
+}
+
+function stopTimer() {
+  seconds = 31;
+  clearInterval(timer);
+}
+
+function formatTimer(seconds) {
+  return seconds < 10 ? `00:0${seconds}` : `00:${seconds}`;
+}
